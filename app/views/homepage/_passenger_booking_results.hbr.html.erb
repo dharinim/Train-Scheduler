@@ -5,10 +5,11 @@
         <table id="passenger_booking_table" class="table table-bordred table-striped">
           <thead>
             <th><input type="checkbox" id="checkall" /></th>
+            <th>Date</th>
             <th>Day</th>
-            <th>Time</th>
             <th>From</th>
             <th>To</th>
+            <th>Time</th>
             <th>Seats</th>
             <th>Dispatcher</th>
             <th>Edit</th>
@@ -22,9 +23,10 @@
                 <tr>    
                   <td><input type="checkbox" class="checkthis" /></td>
                   <td>{{../date}}</td>
-                  <td>{{departure_time}}</td>
+                  <td>{{day_of_the_week}}</td>
                   <td>{{from_city}}</td>
                   <td>{{to_city}}</td>
+                  <td>{{departure_time}}</td>
                   <td>{{available_seats}}</td>
                   <td>{{dispatcher_name}}</td>
                   <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>

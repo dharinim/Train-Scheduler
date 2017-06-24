@@ -3,9 +3,8 @@
                   <thead>
                     <th><input type="checkbox" id="checkall" /></th>
                     <th>Day</th>
+                    <th>Frequency</th>
                     <th>Departure time</th>
-                    <th>occurance</th>
-                    <th>Occurance Type</th>
                     <th>From</th>
                     <th>To</th>
                     <th>Seats</th>
@@ -18,9 +17,8 @@
                       <tr>
                         <td><input type="checkbox" class="checkthis" /></td>
                         <td><%= schedule["day_of_the_week"] %></td>
+                        <td><%= schedule["schedule_frequency"] %></td>
                         <td><%= schedule["departure_time"] %></td>
-                        <td><%= schedule["occurance"] %></td>
-                        <td><%= schedule["occurance_type"] %></td>
                         <td><%= schedule["from_city"] %></td>
                         <td><%= schedule["to_city"] %></td>
                         <td><%= schedule["available_seats"] %></td>
