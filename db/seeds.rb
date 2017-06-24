@@ -9,11 +9,13 @@ Train.delete_all
 Schedule.delete_all
 Dispatcher.delete_all
 City.delete_all
+TrainSchedule.delete_all
 
 Train.connection.execute('ALTER SEQUENCE trains_id_seq RESTART WITH 1')
 Schedule.connection.execute('ALTER SEQUENCE schedules_id_seq RESTART WITH 1')
 Dispatcher.connection.execute('ALTER SEQUENCE dispatchers_id_seq RESTART WITH 1')
 City.connection.execute('ALTER SEQUENCE cities_id_seq RESTART WITH 1')
+TrainSchedule.connection.execute('ALTER SEQUENCE cities_id_seq RESTART WITH 1')
 
 day = {
   'monday' => 0,
@@ -82,10 +84,22 @@ def seed_dispatcher
   Dispatcher.create(name: 'FunTime')
 end
 
+def seed_train_schedule
+  TrainSchedule.create(schedule_id: 1, train_id: 1)
+  TrainSchedule.create(schedule_id: 4, train_id: 2)
+  TrainSchedule.create(schedule_id: 2, train_id: 3)
+  TrainSchedule.create(schedule_id: 5, train_id: 2)
+  TrainSchedule.create(schedule_id: 6, train_id: 2)
+  TrainSchedule.create(schedule_id: 2, train_id: 1)
+  TrainSchedule.create(schedule_id: 3, train_id: 1)
+  TrainSchedule.create(schedule_id: 4, train_id: 3)
+end
+
 seed_cities(cities)
 seed_schedule(day, occurance, occurance_type, time)
 seed_train
 seed_dispatcher
+seed_train_schedule
 
 
 
