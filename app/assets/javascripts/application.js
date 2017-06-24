@@ -18,6 +18,31 @@
 //= require bootstrap-datepicker
 
 $(document).ready(function (){
+
+  // Load schedule on page load
+  var schedule_source   = $("#render_dispatcher_schedule").html();
+  var schedule_template = Handlebars.compile(schedule_source);
+
+
+  $.ajax({
+    url: "/schedules",
+    type: "get",
+    success: function(response) {
+      //Do Something
+      console.log(response);
+      schedule_html = schedule_template({
+        schedules: response.schedules
+      });
+
+      $("#dispatch_schedules").html(schedule_html);
+    },
+    error: function(xhr) {
+      //Do Something to handle error
+    }
+  });
+
+
+  // Booking related JS
   var passenger_booking_source   = $("#render_passender_booking").html();
   var passenger_booking_template = Handlebars.compile(passenger_booking_source);
 

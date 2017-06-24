@@ -21,8 +21,6 @@ class SchedulesController < ApplicationController
       to_city: params[:to_city],
     }
 
-    p criteria
-
     response = {
       train_schedules: find_train_schedules(criteria)
     }

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'schedules/index'
+  get 'schedules', to: "schedules#index"
   get 'schedules/trains'
 
   get '/', to: "homepage#index"
