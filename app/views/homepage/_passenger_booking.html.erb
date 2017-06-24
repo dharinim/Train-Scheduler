@@ -1,0 +1,33 @@
+<div class="col-md-6">
+  <form id="passenger_booking">
+    <div class="form-group">
+        <label for="exampleInputEmail1">From City</label>
+        <select class="form-control" id="from_city">
+          <option value="1">San Francisco</option>
+          <option value="2">Los Angels</option>
+          <option value="3">Seattle</option>
+          <option value="4">Las Vegas</option>
+          <option value="5">New Jersey</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">To City</label>
+        <select class="form-control" id="to_city">
+          <option value="3">Seattle</option>
+          <option value="1">San Francisco</option>
+          <option value="2">Los Angels</option>
+          <option value="4">Las Vegas</option>
+          <option value="5">New Jersey</option>
+        </select>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputFile">Search From Date</label>
+      <div>
+      <input type="text" data-provide='datepicker' placeholder="<%= Date.today.strftime("%Y-%m-%d") %>" data-date-format="yyyy-mm-dd" value="<%= Date.today.strftime("%Y-%m-%d") %>"  id="start_date">
+      </div>
+    </div>        
+    <button type="submit" class="btn btn-default">Search</button>
+  </form>
+</div>
+<div id="booking_results">
+</div>

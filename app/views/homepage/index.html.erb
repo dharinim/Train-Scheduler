@@ -1,0 +1,51 @@
+<div class="container">
+  <div id="exTab2" class="container"> 
+      <ul  class="nav nav-tabs">
+        <li class="active">
+          <a  href="#1a" data-toggle="tab">Manage Schedule</a>
+        </li>
+        <li><a href="#2a" data-toggle="tab">Passenger Booking</a>
+        </li>
+      </ul>
+
+      <div class="tab-content clearfix">
+        <div class="tab-pane active" id="1a">
+          
+          <div class="container">
+            
+              <div class="row row-grid">
+
+                <div class="col-md-12">
+                  <h3>Dispatcher Schedules</h3>
+                  <p>
+                    The following are the configured train schedules by various
+                    dispatchers.
+                  </p>
+                </div>
+              </div>
+              <%= render "dispatcher_schedule.html.erb" %>
+            
+          </div>
+        </div>
+        <div class="tab-pane" id="2a">
+          <div class="container">
+            <div class="col-md-12">
+              <h3>Book your tickets here</h3>
+              <p>
+                Search for trains between two cities for a week starting
+                from the selected date.
+              </p>
+            </div>
+            <%= render "passenger_booking.html.erb" %>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<!-- Modal windows for edit/delete operations -->
+<%= render "dispatcher_delete_modal.html.erb" %>
+<%= render "dispatcher_edit_modal.html.erb" %>
+
+<!-- Handlebar templates required by JS in this file --> 
+<%= render "passenger_booking_results.hbr.html.erb" %>

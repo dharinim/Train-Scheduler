@@ -5,8 +5,8 @@ module ScheduleService
   def find_train_schedules(criteria={})
 
     start_date     = criteria[:start_date]   || "2017-06-24"
-    start_location = criteria[:from_city_id] || 3
-    end_location   = criteria[:to_city_id]   || 1
+    start_location = criteria[:from_city]    || 3
+    end_location   = criteria[:to_city]      || 1
     max_days       = criteria[:max_days]     || 7
 
     day_count = 0
@@ -72,9 +72,14 @@ module ScheduleService
                                         trains: {from_city_id: start_location, to_city_id: end_location} 
                                   ).pluck(*required_fields)
 
+    if (week == 1 || week == 3 || week == 5)                            
+      biweekly_week = 1
+    elsif (week == 2 || week == 4)
+      biweekly_week = 2
+    end
     biweekly_trains = TrainSchedule.joins(train: [:from_city, :to_city, :dispatcher]).
                                   joins(:schedule).
-                                  where(schedules: { occurance_type: week, occurance: 1, day_of_the_week: day_of_the_week_enum }, 
+                                  where(schedules: { occurance_type: biweekly_week, occurance: 1, day_of_the_week: day_of_the_week_enum }, 
                                         trains: {from_city_id: start_location, to_city_id: end_location} 
                                   ).pluck(*required_fields)
 
@@ -127,25 +132,68 @@ module ScheduleService
     return week
   end
 
+  # def get_all_schedules(
+  #   fields=[
+  #     "id",
+  #     "day_of_the_week",
+  #     "departure_time" ,
+  #     "occurance",
+  #     "occurance_type"
+  #   ]
+  # )
+  #   Schedule.select(fields.join(',')).all()
+  # end
+
   def get_all_schedules(
     fields=[
       "id",
       "day_of_the_week",
       "departure_time" ,
       "occurance",
-      "occurance_type"
+      "occurance_type",
+      "trains.seats",
+      "cities.name",
+      "to_cities_trains.name",
+      "dispatchers.name"
     ]
   )
-    Schedule.select(fields.join(',')).all()
+
+    user_friendly_required_fields = [
+      "id",
+      "day_of_the_week",
+      "departure_time",
+      "occurance",
+      "occurance_type",
+      "available_seats",
+      "from_city",
+      "to_city",
+      "dispatcher_name"
+    ]
+
+    train_schedules = TrainSchedule.joins(train: [:from_city, :to_city, :dispatcher]).
+                  joins(:schedule).
+                  pluck(*fields)
+    # train_schedules = train_schedules.map{|pa| Hash[fields.zip(pa)]}
+
+    train_schedules = train_schedules.map{|pa| Hash[user_friendly_required_fields.zip(pa)]}
+
+    for train_schedule in train_schedules
+      train_schedule["day_of_the_week"] =  Schedule.day_of_the_weeks.key(train_schedule["day_of_the_week"])
+      train_schedule["occurance"] = Schedule.occurances.key(train_schedule["occurance"])
+      train_schedule["occurance_type"] = Schedule.occurance_types.key(train_schedule["occurance_type"])
+      train_schedule["departure_time"] = train_schedule["departure_time"].strftime("%H:%M")
+    end
+
+    return train_schedules
   end
 end
 
-# class LocalRunner
-#   include ScheduleService
+class LocalRunner
+  include ScheduleService
 
-#   def mymethod
-#     find_train_schedules
-#   end
-# end
+  def mymethod
+    find_train_schedules
+  end
+end
 
-# p LocalRunner.new.mymethod
+p LocalRunner.new.mymethod
