@@ -27,9 +27,40 @@ class ValidateRequest
   end
 end
 
+class AccessLog
+  def self.before(controller)
+    # Can log request without PII
+    controller.logger.info({
+      controller: controller.controller_name,
+      action: controller.action_name
+    });
+  end
+end
+
+class StatsEmitter
+  def self.before(controller)
+    # increments request.count.schedule.action.trains
+    $statsd.increment 'request.count.'+ controller.controller_name + ".action." + controller.action_name
+  end
+
+  def self.around(controller)
+    # Emit appropriate stats
+    yield
+  end
+
+  def self.after(controller)
+    # Emit appropriate stats
+  end
+end
+
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action ::ValidateRequest
+  before_action ::AccessLog
+
+  before_action ::StatsEmitter
+  around_action ::StatsEmitter
+  after_action  ::StatsEmitter
 end
 
