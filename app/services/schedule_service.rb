@@ -1,4 +1,10 @@
 module ScheduleService
+  # Given a day, calculate all possible trains
+  # running for the next week. Duration is configurable.
+  # @option params start_date
+  # @option params from_city
+  # @option params to_city
+  # @option params max_days
   def find_train_schedules(criteria={})
 
     current_start_date = criteria[:start_date]   || "2017-06-24"
@@ -23,6 +29,28 @@ module ScheduleService
     return train_schedules
   end
 
+  # Get all schedules configured by the dispatcher
+  def get_all_schedules
+    pluck_fields = {
+      "id": "id",
+      "day_of_the_week": "day_of_the_week",
+      "schedules.departure_time": "departure_time",
+      "frequency": "schedule_frequency",
+      "trains.seats": "available_seats",
+      "cities.name": "from_city",
+      "to_cities_trains.name": "to_city",
+      "dispatchers.name": "dispatcher_name"
+    }.to_a
+
+    query = TrainSchedule.joins(train: [:from_city, :to_city, :dispatcher]).
+                   joins(:schedule)
+                   
+
+    return _execute_schedule_query(query, pluck_fields)              
+  end
+
+  # Given a date, start location and end location
+  # Find all trains running on that day.
   def _find_train_schedule(date = "2017-06-30", start_location = 3, end_location = 1)
     day = _string_to_date(date).day
     week = _convert_day_to_week(day)
@@ -54,25 +82,9 @@ module ScheduleService
     return _execute_schedule_query(query, pluck_fields)
   end
 
-  def get_all_schedules
-    pluck_fields = {
-      "id": "id",
-      "day_of_the_week": "day_of_the_week",
-      "schedules.departure_time": "departure_time",
-      "frequency": "schedule_frequency",
-      "trains.seats": "available_seats",
-      "cities.name": "from_city",
-      "to_cities_trains.name": "to_city",
-      "dispatchers.name": "dispatcher_name"
-    }.to_a
-
-    query = TrainSchedule.joins(train: [:from_city, :to_city, :dispatcher]).
-                   joins(:schedule)
-                   
-
-    return _execute_schedule_query(query, pluck_fields)              
-  end
-
+  # @!visibility private
+  # Get a active record query, runs and converts the 
+  # plucked array into a hash for returning.
   def _execute_schedule_query(query, pluck_fields)
     pluck_fields_key = pluck_fields.map{|i| i[0]}
     pluck_fields_value = pluck_fields.map{|i| i[1]}
@@ -85,6 +97,8 @@ module ScheduleService
     return schedules
   end
 
+  # @!visibility private
+  # Perform standard transformation for display
   def _normalize_keys(schedules)
     for schedule in schedules
       schedule["day_of_the_week"] =  Schedule.day_of_the_weeks.key(schedule["day_of_the_week"])
@@ -92,19 +106,24 @@ module ScheduleService
     end
   end
 
+  # @!visibility private
+  # Used in converting enum to day
   def _day_of_the_week(date)
     Date.parse(date).strftime("%A").downcase
   end
 
+  # @!visibility private
   def _increment_date(date)
       day_added = _string_to_date(date) + 1.day
       return day_added.strftime("%Y-%m-%d")
   end
 
+  # @!visibility private
   def _string_to_date(string_date, format= "%Y-%m-%d")
     Date.strptime(string_date, "%Y-%m-%d")
   end
 
+  # @!visibility private
   def _convert_day_to_week(day)
     case day
       when 0..7 then week = 1

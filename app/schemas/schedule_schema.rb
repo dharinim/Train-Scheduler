@@ -1,3 +1,4 @@
+# Validates {SchedulesController#trains}
 module ScheduleSchema
   Trains = {
     "type" => "object",

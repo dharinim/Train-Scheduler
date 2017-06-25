@@ -1,6 +1,9 @@
+#  The API endpoints to interact with schdules of trains.
 class SchedulesController < ApplicationController
   include ScheduleService
 
+  # Returns all available recurring schedules of
+  # all trains. This method serves the route "/schedules/".
   def index
     schedules = get_all_schedules
 
@@ -13,6 +16,14 @@ class SchedulesController < ApplicationController
     end
   end
 
+  # Returns all train trips available for booking
+  # for a given date, start and destination city.
+  # This API is validated using {ScheduleSchema}
+  # This method serves the route "/schedules/trains".
+  # @option params start_date
+  # @option params from_city
+  # @option params to_city
+  # @option params max_days
   def trains
     criteria = {
       start_date: params[:start_date],

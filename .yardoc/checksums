@@ -1,0 +1,10 @@
+app/lib/time.rb 193462219c8ba3bab675ea029f5f11fa2cd260c3
+app/models/city.rb a943dfbe02ff7b448de3909507509df306f22bd1
+app/models/train.rb 4e019f7965b6a6e5bebef3c45b2b6381b11f2255
+app/models/schedule.rb 4efc4e62dbbba9ea4af9e73302fee08b9d230233
+app/models/dispatcher.rb 990e17412eb2be271ba37fdbe919855074ceaba4
+app/models/train_schedule.rb 099f9d8aaf98739f8f31ef0ba550e2c17344ab30
+app/schemas/schedule_schema.rb a9698b0c4542b5faae624cadfe1babcd73f5453e
+app/services/schedule_service.rb 34d6fecfcf9028c641ecbb48aadaa50670c77def
+app/controllers/homepage_controller.rb a18d9cecf5065bd4ac87f5478c98029a6bb605d3
+app/controllers/schedules_controller.rb f10302b19a8c5f8ec4d106a97ee9487775950fd6

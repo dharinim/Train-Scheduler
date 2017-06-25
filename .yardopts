@@ -1,0 +1,18 @@
+--protected
+--no-private
+--embed-mixin ClassMethods
+--exclude app/controllers/application_controller.rb
+--exclude app/channels/application_cable/channel.rb
+--exclude app/helpers/application_helper.rb
+
+--exclude app/channels/application_cable/connection.rb
+--exclude app/jobs/application_job.rb
+--exclude app/mailers/application_mailer.rb
+--exclude app/models/application_record.rb
+--exclude app/helpers/homepage_helper.rb
+--exclude app/helpers/schedules_helper.rb
+--exclude app/controllers/application_controller.rb
+--exclude app/controllers/application_controller.rb
+--exclude app/controllers/application_controller.rb
+
+

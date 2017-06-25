@@ -1,24 +1,58 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Full stack Schedule and booking system.
 
-Things you may want to cover:
+## Pre-requisites
+- Ensure postgres sql is installed locally
+- Ensure ruby is installed
 
-* Ruby version
+## Installation
 
-* System dependencies
+```bash
 
-* Configuration
+  bundle install
+  rails db:create
+  rails db:migrate
+  rails db:seed
+  rails s
 
-* Database creation
+```
 
-* Database initialization
+Once installation is done, visit http://localhost:3000/
 
-* How to run the test suite
+## Key Features Implemented
+  - Schedule controller has two API endpoints
+      - **/schedule/** : provides information of all available schedules
+        and their frequencies. This is used by a dispatch 
+        manager to view weekly,biweekly,monthly schedules.
+      - **/schedule/trains** : Search for trains between two cities on the week
+        following a given date. This can be used for booking.
+  - UI using bootstrap, handlebar for templating
+      - Schedule management page
+      - Passenger booking page
+  - Database schema design and data seeding
+  - Request validation using JSON schema
+  - Logging
+  - Stasd 
 
-* Services (job queues, cache servers, search engines, etc.)
+## Anatomy of the application
 
-* Deployment instructions
+The following are the links to key files 
+that constitute the application. 
 
-* ...
+### Models
+  - {City}: Names of the city the service is offered.
+  - {Train}: Represents a train line from a city to a city.
+  - {Schedule}: A configuration of a recurring service. 
+  - {TrainSchedule}: Connects a train with a recurring schedule.
+  - {Dispatcher}: A dispatcher is a company that runs a train service.
+
+### Controllers
+  - {SchedulesController}: Two key API methods implemented.
+  - {HomepageController}: Displays the UI rendering a erb file.
+
+### Services
+  - {ScheduleService}: Build of the business logic for driving the the APIs
+
+### Schemas
+  - {ScheduleSchema}: JSON schema that validates APIs
