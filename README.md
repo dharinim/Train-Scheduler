@@ -10,7 +10,9 @@ Full stack Schedule and booking system.
 
 ```bash
 
+  gem install bundle
   bundle install
+  export RAILS_ENV=production
   rails db:create
   rails db:migrate
   rails db:seed
@@ -19,6 +21,19 @@ Full stack Schedule and booking system.
 ```
 
 Once installation is done, visit http://localhost:3000/
+
+## Testing
+
+```bash
+
+  export RAILS_ENV=test
+  rails db:create
+  rails db:migrate
+  rails db:seed
+  rails test
+
+```
+
 
 ## Key Features Implemented
   - Schedule controller has two API endpoints
@@ -56,3 +71,12 @@ that constitute the application.
 
 ### Schemas
   - {ScheduleSchema}: JSON schema that validates APIs
+
+# Images
+
+The following are screenshorts of the application which 
+has two views. A view to watch recurring schedules and 
+a view to look up and book trains in those schedules.
+
+![Manage Schedule](manage-schedule.png)
+![Passenger Booking](passenger-booking.png)

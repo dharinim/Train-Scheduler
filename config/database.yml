@@ -81,5 +81,5 @@ test:
 production:
   <<: *default
   database: trainschedule_production
-  username: trainschedule
+  username: <%= ENV['TRAINSCHEDULE_USERNAME'] %>
   password: <%= ENV['TRAINSCHEDULE_PASSWORD'] %>
